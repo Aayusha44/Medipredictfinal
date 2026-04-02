@@ -2,7 +2,7 @@
 
 > **Author:** Aayusha Bhatta (`aayushabhatta`)
 > **Live (Replit):** https://medpredict.replit.app
-> **Live (GitHub Pages):** https://aayushabhatta.github.io/medpredict
+> **Live (GitHub Pages):** https://aayusha44.github.io/Medipredictfinal/
 
 An AI-powered health analytics platform that provides risk assessments for **Diabetes**, **Heart Disease**, and **Parkinson's Disease** using weighted clinical-factor simulation models, a modern glassmorphism React UI, and an Express + PostgreSQL backend.
 
