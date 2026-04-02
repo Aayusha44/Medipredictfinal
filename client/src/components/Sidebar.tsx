@@ -13,11 +13,9 @@ const navItems = [
   { href: "/parkinsons", label: "Parkinson's", icon: Brain },
 ];
 
-export function Sidebar({ onLogout }: SidebarProps) {
+function NavContent({ onLogout, onNavClick }: { onLogout?: () => void; onNavClick: () => void }) {
   const [location] = useLocation();
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const NavContent = () => (
+  return (
     <div className="flex flex-col h-full">
       <div className="p-6 border-b border-white/10">
         <div className="flex items-center gap-3">
@@ -35,18 +33,18 @@ export function Sidebar({ onLogout }: SidebarProps) {
         {navItems.map(({ href, label, icon: Icon }) => {
           const active = location === href;
           return (
-            <Link key={href} href={href}>
-              <a
-                onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                  active
-                    ? "bg-primary/20 text-primary border border-primary/30"
-                    : "text-muted-foreground hover:text-white hover:bg-white/5"
-                }`}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {label}
-              </a>
+            <Link
+              key={href}
+              href={href}
+              onClick={onNavClick}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                active
+                  ? "bg-primary/20 text-primary border border-primary/30"
+                  : "text-muted-foreground hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Icon className="w-5 h-5 flex-shrink-0" />
+              {label}
             </Link>
           );
         })}
@@ -65,10 +63,14 @@ export function Sidebar({ onLogout }: SidebarProps) {
       )}
     </div>
   );
+}
+
+export function Sidebar({ onLogout }: SidebarProps) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const closeMobile = () => setMobileOpen(false);
 
   return (
     <>
-      {/* Mobile toggle button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#2a2d2d] border border-white/10 rounded-xl text-white"
@@ -76,26 +78,20 @@ export function Sidebar({ onLogout }: SidebarProps) {
         {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
 
-      {/* Mobile overlay */}
       {mobileOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-black/60 z-40"
-          onClick={() => setMobileOpen(false)}
-        />
+        <div className="lg:hidden fixed inset-0 bg-black/60 z-40" onClick={closeMobile} />
       )}
 
-      {/* Mobile sidebar */}
       <aside
         className={`lg:hidden fixed left-0 top-0 h-full w-72 bg-[#181a1a] border-r border-white/10 z-40 transform transition-transform duration-300 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <NavContent />
+        <NavContent onLogout={onLogout} onNavClick={closeMobile} />
       </aside>
 
-      {/* Desktop sidebar */}
       <aside className="hidden lg:flex fixed left-0 top-0 h-full w-72 bg-[#181a1a] border-r border-white/10 flex-col z-30">
-        <NavContent />
+        <NavContent onLogout={onLogout} onNavClick={closeMobile} />
       </aside>
     </>
   );
