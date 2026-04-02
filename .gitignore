@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.cache/
+
+# Build output
+dist/
+server/public/
+
+# Environment – NEVER commit real secrets
+.env
+.env.local
+.env.*.local
+
+# Vite
+vite.config.ts.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pythonlibs/
+.venv/
+venv/
+
+# ML model binaries (large binary files – regenerate via train_models.py)
+models/*.pkl
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Archives
+*.tar.gz
+*.zip
+
+# Replit-specific
+.replit
+replit.nix
+.upm/
